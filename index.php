@@ -1,7 +1,5 @@
 <?php
-
 header('Content-Type: text/html; charset=UTF-8');
-
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages = array();
     $messages[8] = '';
@@ -18,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
           strip_tags($_COOKIE['pass']));
       }
     }
-
     $errors = array();
     $errors['fio'] = !empty($_COOKIE['fio_error']);
     $errors['email'] = !empty($_COOKIE['email_error']);
@@ -26,10 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $errors['gender'] = !empty($_COOKIE['gender_error']);
     $errors['limbs'] = !empty($_COOKIE['limbs_error']);
     $errors['biography'] = !empty($_COOKIE['biography_error']);
-
     $errors['ability'] = !empty($_COOKIE['ability_error']);
     $errors['contract'] = !empty($_COOKIE['contract_error']);
-
     if ($errors['fio']) {
       setcookie('fio_error', '', 100000);
       $messages[0] = '<div class="error_text">Поле с именем не должно быть пустым.</div>';
@@ -62,9 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       setcookie('contract_error', '', 100000);
       $messages[7] = '<div class="error_text">Вы должны согласиться с условиями , прежде чем продолжить.</div>';
     }
-
-
-
     if (!empty($_COOKIE[session_name()]) &&
         session_start() && !empty($_SESSION['login'])) {
       $user = 'u20945';
@@ -73,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $stmt = $db->prepare("SELECT * FROM user WHERE user_id = ?");
       $stmt->execute([$_SESSION['uid']]);
       $row = $stmt ->fetch(PDO::FETCH_ASSOC);
-
       $values = array();
       $values['fio'] = $row["fio"];
       $values['email'] = $row["user_email"];
@@ -98,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $ability = array();
       $ability = empty($_COOKIE['ability_values']) ? array() : unserialize($_COOKIE['ability_values'], ["allowed_classes" => false]);
     }
-    
     include('form.php');
   }
 else {
@@ -157,14 +147,11 @@ else {
       setcookie('contract_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
-
-
 if ($errors) {
     header('Location: index.php');
     exit();
   }
   else {
-    // Удаляем Cookies с признаками ошибок.
     setcookie('fio_error', '', 100000);
     setcookie('email_error', '', 100000);
     setcookie('birthday_error', '', 100000);
@@ -174,19 +161,14 @@ if ($errors) {
     setcookie('biography_error', '', 100000);
     setcookie('contract_error', '', 100000);
   }
-
-
  $user = 'u52806';
  $pass = '7974759';
  $db = new PDO('mysql:host=localhost;dbname=u52806', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
-
  if (!empty($_COOKIE[session_name()]) &&
      session_start() && !empty($_SESSION['login'])) {
-   
    $stmt = $db->prepare("UPDATE user SET fio = ?, user_email = ?, user_birthday = ?, user_gender = ? , user_limb_count = ?, user_biography = ? WHERE user_id = ?");
    $stmt -> execute([$_POST['fio'],$_POST['email'],$_POST['birthday'],$_POST['gender'],$_POST['limbs'],$_POST['biography'],$_SESSION['uid']]);
    $stmt2 = $db->prepare("INSERT INTO link SET userr_id= ?, abil_id = ?");
-
    foreach ($_POST['ability'] as $s)
      $stmt2 -> execute([$_SESSION['uid'], $s]);
  }
@@ -201,12 +183,9 @@ if ($errors) {
    $user_id = $db->lastInsertId();
    foreach ($_POST['ability'] as $s)
      $stmt2 -> execute([$user_id, $s]);
-
    $stmt = $db->prepare("INSERT INTO login_data SET login_id = ?, pass = ?, user_id = ?");
    $stmt -> execute([$login,md5($pass),$user_id]);
  }
-
 setcookie('save', '1');
-
 header('Location: ?save=1');
 }
