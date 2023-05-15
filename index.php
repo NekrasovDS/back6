@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     if (!empty($_COOKIE[session_name()]) &&
         session_start() && !empty($_SESSION['login'])) {
+      $user = 'u52806';
       $pass = '7974759';
       $db = new PDO('mysql:host=localhost;dbname=u52806', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
       $stmt = $db->prepare("SELECT * FROM user WHERE user_id = ?");
