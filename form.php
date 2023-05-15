@@ -136,6 +136,7 @@ font-size: 12px;
           </div>
 
               <a href="login.php">logout/login</a>
+        <br><a href="admin.php">admin</a>
       </main>
       <?php
 if (!empty($messages)) {
