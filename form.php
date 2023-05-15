@@ -42,20 +42,12 @@ font-size: 12px;
                 </label><br />
                 <?php if ($errors['email']) {print $messages[1];} ?>
 
-                <p>Укажите год своего рождения: <br>
-                  <select name="birthday" 
-                          <?php if ($errors['birthday']) {print 'class="error"';} ?>>
-                    <?php 
-                    for ($i = 1922; $i <= 2022; $i++) {
-                      printf('<option value="%d">%d год</option>', $i, $i);}
-                    ?><?php
-                    for ($i = 2023; $i >= 1922; $i--) {
-                      if ($i == $values['birthday']) {
-                        printf('<option selected value="%d">%d год</option>', $i, $i);
-                      } else {
-                        printf('<option value="%d">%d год</option>', $i, $i);
-                      }
-                    }?></select>
+                  <label>
+                  Укажите дату своего рождения: <br />
+                  <input name="birthday"
+                    <?php if ($errors['birthday']) {print 'class="error"';} ?> value="<?php print $values['birthday']; ?>"
+                    type="date" min="1900-01-01" max="2022-12-31">
+                </label><br />
                      
                   Укажите Ваш пол:
                 <br />
