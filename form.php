@@ -48,7 +48,7 @@ font-size: 12px;
                     <?php if ($errors['birthday']) {print 'class="error"';} ?> value="<?php print $values['birthday']; ?>"
                     type="date" min="1900-01-01" max="2022-12-31">
                 </label><br />
-                     
+                  <?php if ($errors['birthday']) {print $messages[2];} ?>
                   Укажите Ваш пол:
                 <br />
                 <?php if ($errors['gender']) 
