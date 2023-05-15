@@ -169,7 +169,7 @@ if ($errors) {
    $stmt -> execute([$_POST['fio'],$_POST['email'],$_POST['birthday'],$_POST['gender'],$_POST['limbs'],$_POST['biography'],$_SESSION['uid']]);
    $stmt2 = $db->prepare("INSERT INTO link SET userr_id= ?, abil_id = ?");
    foreach ($_POST['ability'] as $s)
- }
+     $stmt2 -> execute([$_SESSION['uid'], $s]);}
  else {
    $login = uniqid('',true);
    $pass = rand(10,100);
